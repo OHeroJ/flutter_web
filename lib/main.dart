@@ -28,13 +28,13 @@ class Tree extends StatelessWidget {
       color: Colors.black,
       child: Align(
         child: Container(
-          constraints: BoxConstraints(maxWidth: 700),
+          constraints: BoxConstraints(maxWidth: 500),
           child: ListView(
             children: <Widget>[
               Center(child: Icon(Icons.star, color: Colors.white)),
-              SizedBox(height: 7),
+              SizedBox(height: 3),
               for (final x in _offsets) Light(x),
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               Center(child: Text('圣诞快乐'))
             ],
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 7),
