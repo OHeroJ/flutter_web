@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+import 'call_to_action_mobile.dart';
+import 'call_to_action_table_desktop.dart';
 
 class CallToAction extends StatelessWidget {
   final String title;
@@ -6,15 +9,13 @@ class CallToAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-      child: Text(
-        title,
-        style: TextStyle(
-            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+    return ScreenTypeLayout(
+      mobile: CallToActionMobile(
+        title: title,
       ),
-      decoration: BoxDecoration(
-          color: Color(0xffEF5138), borderRadius: BorderRadius.circular(4)),
+      tablet: CallToActionTabletDesktop(
+        title: title,
+      ),
     );
   }
 }
