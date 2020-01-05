@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'navbar_log.dart';
+import 'package:flutter_web/routing/route_names.dart';
+import 'navbar_logo.dart';
 
 class NavigationBarMobile extends StatelessWidget {
   @override
@@ -7,14 +8,21 @@ class NavigationBarMobile extends StatelessWidget {
     return Container(
       height: 80,
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
+            alignment: Alignment.centerLeft,
+            icon: Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
           ),
-          NavBarLogo()
+          NavBarLogo(
+            navigationPath: HomeRoute,
+          )
         ],
       ),
     );

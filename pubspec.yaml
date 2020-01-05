@@ -21,8 +21,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^0.1.2
-
   responsive_builder: ^0.1.4
+  get_it: ^3.1.0
 
 dev_dependencies:
   flutter_test:

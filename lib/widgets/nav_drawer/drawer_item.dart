@@ -5,7 +5,8 @@ import 'package:flutter_web/widgets/navigation_bar/navbar_item.dart';
 class DrawerItem extends StatelessWidget {
   final String title;
   final IconData icon;
-  const DrawerItem({this.title, this.icon});
+  final String navigationPath;
+  const DrawerItem({this.title, this.icon, this.navigationPath});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class DrawerItem extends StatelessWidget {
           ),
           NavBarItem(
             title: title,
+            navigationPath: navigationPath,
           )
         ],
       ),
