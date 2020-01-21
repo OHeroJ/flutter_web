@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web/routing/route_names.dart';
-import 'package:flutter_web/widgets/nav_drawer/drawer_item.dart';
-import 'package:flutter_web/widgets/navigation_drawer/navigation_drawer_header.dart';
+import '../navbar_item/navbar_item.dart';
+import 'navigation_drawer_header.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -14,12 +14,12 @@ class NavigationDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           NavigationDrawerHeader(),
-          DrawerItem(
+          NavBarItem(
             title: '文章',
             icon: Icons.book,
             navigationPath: ArticlesRoute,
           ),
-          DrawerItem(
+          NavBarItem(
             title: '关于',
             icon: Icons.help,
             navigationPath: AboutRoute,
