@@ -3,11 +3,9 @@ import 'package:flutter_web/provider/theme_state.dart';
 import 'package:provider/provider.dart';
 import 'locator.dart';
 import 'views/layout_template/layout_template.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   setupLocator();
-  GoogleFonts.config.allowHttp = false;
   runApp(Wrapper(
     child: MyApp(),
   ));

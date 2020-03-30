@@ -23,7 +23,7 @@ class ArticleDetails extends StatelessWidget {
                 : 21;
 
         return Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,

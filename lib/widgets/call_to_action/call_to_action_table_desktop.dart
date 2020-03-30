@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/consts/consts.dart';
 
 class CallToActionTabletDesktop extends StatelessWidget {
   final String title;

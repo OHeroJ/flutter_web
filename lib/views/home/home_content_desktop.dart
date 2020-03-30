@@ -6,8 +6,11 @@ class HomeContentDesktop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        ArticleDetails(),
         Expanded(
+          child: ArticleDetails(),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 100, right: 100),
           child: Center(
             child: CallToAction(
               title: '进入阅读',
