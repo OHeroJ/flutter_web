@@ -14,17 +14,20 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.5.2 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^0.1.2
-  responsive_builder: ^0.1.4
+  responsive_builder: ^0.1.5
   get_it: ^3.1.0
   provider_architecture: ^1.0.5
   provider: ^4.0.1
+  shared_preferences: ^0.5.6+3
+  url_launcher: ^5.4.2
+  pull_to_refresh: ^1.5.8
+  google_fonts: ^0.3.10
 
 dev_dependencies:
   flutter_test:
@@ -34,8 +37,9 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
   assets:
-    - assets/images/logo.jpg
+    - assets/images/
 
   fonts:
     - family: Open Sans

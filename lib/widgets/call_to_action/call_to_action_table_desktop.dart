@@ -8,14 +8,11 @@ class CallToActionTabletDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: primaryColor, borderRadius: BorderRadius.circular(5)),
+    return RaisedButton(
+      onPressed: () {},
       padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
       child: Text(
         title,
-        style: TextStyle(
-            fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
       ),
     );
   }

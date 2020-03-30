@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web/provider/theme_state.dart';
 import 'package:flutter_web/routing/route_names.dart';
 import 'navbar_logo.dart';
 import '../navbar_item/navbar_item.dart';
+import 'package:provider/provider.dart';
 
 class NavigationBarTableDesktop extends StatelessWidget {
   @override
@@ -25,6 +27,28 @@ class NavigationBarTableDesktop extends StatelessWidget {
               NavBarItem(
                 title: '关于',
                 navigationPath: AboutRoute,
+              ),
+              SizedBox(width: 50),
+              Consumer<ThemeState>(
+                builder: (context, state, _) {
+                  return GestureDetector(
+                    onTap: () => state.toggle(),
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      margin: const EdgeInsets.only(right: 10),
+                      child: Image(
+                        image: AssetImage(
+                          state.isDark
+                              ? 'assets/images/theme_light.png'
+                              : 'assets/images/theme_dark.png',
+                        ),
+                        color: state.isDark ? Colors.white : Colors.black,
+                        width: 30,
+                        height: 30,
+                      ),
+                    ),
+                  );
+                },
               )
             ],
           )

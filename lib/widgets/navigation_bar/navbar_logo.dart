@@ -19,12 +19,17 @@ class NavBarLogo extends StatelessWidget {
           onTap: () {
             locator<NavigationService>().navigateTo(navigationPath);
           },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(radius),
-            child: SizedBox(
-              height: sizeWH,
-              width: sizeWH,
-              child: Image.asset('assets/images/logo.jpg'),
+          child: Padding(
+            padding: sizeInfo.isMobile
+                ? EdgeInsets.only(right: 10)
+                : EdgeInsets.only(left: 10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(radius),
+              child: SizedBox(
+                height: sizeWH,
+                width: sizeWH,
+                child: Image.asset('assets/images/logo.jpg'),
+              ),
             ),
           ),
         );

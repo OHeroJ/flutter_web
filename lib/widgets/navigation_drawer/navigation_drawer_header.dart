@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/consts/consts.dart';
 
 class NavigationDrawerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 150,
-      color: primaryColor,
       alignment: Alignment.center,
       child: Column(
         mainAxisSize: MainAxisSize.min,

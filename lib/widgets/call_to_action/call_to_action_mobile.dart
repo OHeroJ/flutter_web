@@ -7,15 +7,10 @@ class CallToActionMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-          color: primaryColor, borderRadius: BorderRadius.circular(5)),
-      alignment: Alignment.center,
+    return RaisedButton(
+      onPressed: () {},
       child: Text(
         title,
-        style: TextStyle(
-            fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
       ),
     );
   }
