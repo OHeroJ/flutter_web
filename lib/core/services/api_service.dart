@@ -1,3 +1,35 @@
+import 'dart:convert';
+import 'package:dio/browser_imp.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+
+// 必须是顶层函数
+_parseAndDecode(String response) {
+  return jsonDecode(response);
+}
+
+parseJson(String text) {
+  return compute(_parseAndDecode, text);
+}
+
+abstract class BaseHttp extends DioForBrowser {
+  BaseHttp() {
+    (transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
+    init();
+  }
+
+  void init();
+}
+
+class HeaderInterceptor extends InterceptorsWrapper {
+  @override
+  Future onRequest(RequestOptions options) {
+    options.connectTimeout = 1000 * 45;
+    options.receiveTimeout = 1000 * 45;
+    return super.onRequest(options);
+  }
+}
+
 /// 子类需要重写
 abstract class BaseResponseData {
   int code = 0;

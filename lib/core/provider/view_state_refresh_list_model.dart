@@ -3,10 +3,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   /// 分页第一页页码
-  static const int pageNumFirst = 0;
+  static const int pageNumFirst = 1;
 
   /// 分页条目数量
-  static const int pageSize = 20;
+  static const int pageSize = 10;
 
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
