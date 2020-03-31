@@ -11,12 +11,11 @@ class NavigationDrawerHeader extends StatelessWidget {
         children: <Widget>[
           Text(
             '专业技能',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.w800, color: Colors.white),
+            style: Theme.of(context).textTheme.headline5,
           ),
           Text(
             '点击这里',
-            style: TextStyle(color: Colors.white),
+            style: Theme.of(context).textTheme.subtitle1,
           )
         ],
       ),

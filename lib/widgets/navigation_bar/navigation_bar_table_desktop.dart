@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/provider/theme_state.dart';
 import 'package:flutter_web/routing/route_names.dart';
-import 'navbar_logo.dart';
-import '../navbar_item/navbar_item.dart';
 import 'package:provider/provider.dart';
+
+import '../../states/theme_state.dart';
+import '../navbar_item/navbar_item.dart';
+import 'navbar_logo.dart';
 
 class NavigationBarTableDesktop extends StatelessWidget {
   @override

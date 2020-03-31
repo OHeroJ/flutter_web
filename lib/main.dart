@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/provider/theme_state.dart';
 import 'package:provider/provider.dart';
+
 import 'locator.dart';
+import 'states/theme_state.dart';
 import 'views/layout_template/layout_template.dart';
 
 void main() {
