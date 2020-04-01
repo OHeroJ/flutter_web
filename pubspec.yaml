@@ -45,20 +45,4 @@ flutter:
   assets:
     - assets/images/
 
-  fonts:
-    - family: Noto Serif SC
-      fonts:
-        - asset: assets/fonts/NotoSerifSC-Black.otf
-          weight: 900
-        - asset: assets/fonts/NotoSerifSC-Bold.otf
-          weight: 700
-        - asset: assets/fonts/NotoSerifSC-ExtraLight.otf
-          weight: 200
-        - asset: assets/fonts/NotoSerifSC-Light.otf
-          weight: 300
-        - asset: assets/fonts/NotoSerifSC-Medium.otf
-          weight: 500
-        - asset: assets/fonts/NotoSerifSC-Regular.otf
-          weight: 400
-        - asset: assets/fonts/NotoSerifSC-SemiBold.otf
-          weight: 600
+

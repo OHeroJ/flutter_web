@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class WebThemeData {
   static ThemeData darkThemeData = ThemeData(
-    fontFamily: 'Noto Serif SC',
     primarySwatch: MaterialColor(4280361249, {
       50: Color(0xfff2f2f2),
       100: Color(0xffe6e6e6),
@@ -501,7 +500,6 @@ class WebThemeData {
   );
 
   static ThemeData lightThemeData = ThemeData(
-    fontFamily: 'Noto Serif SC',
     primarySwatch: MaterialColor(0xFFFFFFFF, const <int, Color>{
       50: const Color(0xFFFFFFFF),
       100: const Color(0xFFFFFFFF),

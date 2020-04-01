@@ -170,10 +170,10 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.2"
-  core.provider:
+  provider:
     dependency: "direct main"
     description:
-      name: core.provider
+      name: provider
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.0.4"
