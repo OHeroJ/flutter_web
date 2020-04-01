@@ -14,29 +14,27 @@ class NavigationBarTableDesktop extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          NavBarLogo(
-            navigationPath: HomeRoute,
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: NavBarLogo(
+              navigationPath: HomeRoute,
+            ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               NavBarItem(
-                title: '文章',
-                navigationPath: ArticlesRoute,
-              ),
-              SizedBox(width: 50),
-              NavBarItem(
                 title: '关于',
                 navigationPath: AboutRoute,
               ),
-              SizedBox(width: 50),
+              SizedBox(width: 20),
               Consumer<ThemeState>(
                 builder: (context, state, _) {
                   return GestureDetector(
                     onTap: () => state.toggle(),
                     child: Container(
                       padding: EdgeInsets.all(8),
-                      margin: const EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 20),
                       child: Image(
                         image: AssetImage(
                           state.isDark

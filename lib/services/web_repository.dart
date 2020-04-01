@@ -12,4 +12,10 @@ class WebRepository {
       return ModelTopic.fromMap(item['topic']);
     }).toList();
   }
+
+  Future<ModelTopic> getTopicDetail(int topicId) async {
+    var response = await http.get('/topic/$topicId');
+    Map data = response.data;
+    return ModelTopic.fromMap(data['topic']);
+  }
 }
