@@ -31,6 +31,7 @@ dependencies:
   equatable: ^1.1.0
   dio: ^3.0.9
   oktoast: ^2.3.1
+  flutter_markdown: ^0.3.4
 
 
 dev_dependencies:

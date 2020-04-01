@@ -6,6 +6,10 @@ import 'package:flutter_web/locator.dart';
 import 'package:flutter_web/routing/routing.dart';
 
 class LayoutTemplate extends StatelessWidget {
+  final Widget child;
+
+  LayoutTemplate({Key key, this.child}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
@@ -19,11 +23,7 @@ class LayoutTemplate extends StatelessWidget {
                 children: <Widget>[
                   NavigationBar(),
                   Expanded(
-                    child: Navigator(
-                      key: locator<NavigationService>().navigatorKey,
-                      onGenerateRoute: generateRoute,
-                      initialRoute: HomeRoute,
-                    ),
+                    child: child,
                   )
                 ],
               ),
