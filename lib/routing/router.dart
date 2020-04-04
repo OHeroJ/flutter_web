@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/pages/view.dart';
+import 'package:flutter_web/ui/ui.dart';
 
 import 'route_names.dart';
 import 'routing_data.dart';

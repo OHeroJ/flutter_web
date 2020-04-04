@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web/routing/routing.dart';
-import 'package:flutter_web/services/navigation_service.dart';
+import 'package:flutter_web/services/services.dart';
 import 'package:provider/provider.dart';
-
 import 'locator.dart';
-import 'states/theme_state.dart';
-import 'pages/layout_template/layout_template.dart';
+import 'states/states.dart';
+import 'ui/ui.dart';
 
 void main() {
   setupLocator();
@@ -23,7 +22,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(
-        create: (_) => ThemeState(),
+        create: (_) => StateTheme(),
       )
     ], child: child);
   }
@@ -32,7 +31,7 @@ class Wrapper extends StatelessWidget {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeState>(
+    return Consumer<StateTheme>(
       builder: (ctx, themeState, child) {
         return MaterialApp(
           title: 'OldBird',
@@ -42,7 +41,7 @@ class MyApp extends StatelessWidget {
           builder: (context, child) => LayoutTemplate(
             child: child,
           ),
-          navigatorKey: locator<NavigationService>().navigatorKey,
+          navigatorKey: locator<ServiceNavigation>().navigatorKey,
           onGenerateRoute: generateRoute,
           initialRoute: HomeRoute,
         );
