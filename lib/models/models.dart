@@ -1,1 +1,1 @@
-export 'navbar_item_model.dart';
+export 'model_navbar_item.dart';

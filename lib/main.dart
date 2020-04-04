@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'locator.dart';
 import 'states/theme_state.dart';
-import 'views/layout_template/layout_template.dart';
+import 'pages/layout_template/layout_template.dart';
 
 void main() {
   setupLocator();

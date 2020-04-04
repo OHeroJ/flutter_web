@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/views/articles/article_detail_view.dart';
-import 'package:flutter_web/views/view.dart';
+import 'package:flutter_web/pages/view.dart';
 
 import 'route_names.dart';
 import 'routing_data.dart';
@@ -10,20 +9,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
   switch (routingData.route) {
     case HomeRoute:
-      return _getPageRoute(child: HomeView(), settings: settings);
+      return _getPageRoute(child: PageHome(), settings: settings);
     case AboutRoute:
-      return _getPageRoute(child: AboutView(), settings: settings);
+      return _getPageRoute(child: PageAbout(), settings: settings);
     case ArticlesRoute:
-      return _getPageRoute(child: ArticlesView(), settings: settings);
+      return _getPageRoute(child: PageArticles(), settings: settings);
     case ArticleDetailRoute:
       var id = int.tryParse(routingData['id']);
       return _getPageRoute(
-          child: ArticleDetailView(
+          child: PageArticleDetail(
             id: id,
           ),
           settings: settings);
     default:
-      return _getPageRoute(child: HomeView(), settings: settings);
+      return _getPageRoute(child: PageHome(), settings: settings);
   }
 }
 

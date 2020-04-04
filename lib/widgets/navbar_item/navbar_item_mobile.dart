@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_web/models/models.dart';
 import 'package:provider_architecture/provider_architecture.dart';
 
-class NavBarItemMobile extends ProviderWidget<NavBarItemModel> {
+class NavBarItemMobile extends ProviderWidget<ModelNavBarItem> {
   @override
-  Widget build(BuildContext context, NavBarItemModel model) {
+  Widget build(BuildContext context, ModelNavBarItem model) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, top: 60),
       child: Row(

@@ -10,7 +10,7 @@ import 'package:flutter_web/widgets/article_details/article_item_widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../services/navigation_service.dart';
 
-class ArticlesView extends StatelessWidget {
+class PageArticles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderWidget<ArticlesViewModel>(

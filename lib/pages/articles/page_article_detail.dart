@@ -6,9 +6,9 @@ import 'package:flutter_web/viewmodels/article_detail_view_model.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ArticleDetailView extends StatelessWidget {
+class PageArticleDetail extends StatelessWidget {
   final int id;
-  ArticleDetailView({@required this.id});
+  PageArticleDetail({@required this.id});
   @override
   Widget build(BuildContext context) {
     return ProviderWidget<ArticleDetailViewModel>(

@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 
-class NavBarItemModel {
+class ModelNavBarItem {
   final String title;
   final String navigationPath;
   final IconData iconData;
 
-  NavBarItemModel({
+  ModelNavBarItem({
     this.title,
     this.navigationPath,
     this.iconData,
