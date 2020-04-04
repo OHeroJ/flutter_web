@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:loveli_core/loveli_core.dart';
 import 'package:flutter_web/locator.dart';
 import 'package:flutter_web/services/services.dart';
-import 'package:flutter_web/services/net/model_topic.dart';
 import 'package:flutter_web/routing/route_names.dart';
 import 'package:flutter_web/ui/widgets/article_details/article_item_widget.dart';
 import 'package:flutter_web/states/states.dart';

@@ -1,6 +1,6 @@
-import 'package:flutter_web/services/net/model_page_data.dart';
-import 'package:flutter_web/services/net/model_topic.dart';
-import 'api.dart';
+import 'package:flutter_web/services/net/models/model_page_data.dart';
+import 'models/model_topic.dart';
+import 'models/api.dart';
 
 class WebRepository {
   Future<List<ModelTopic>> getTopics({int page = 1, int per = 10}) async {

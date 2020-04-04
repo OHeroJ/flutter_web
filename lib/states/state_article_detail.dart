@@ -1,7 +1,6 @@
 import 'package:loveli_core/loveli_core.dart';
 import 'package:flutter_web/locator.dart';
-import 'package:flutter_web/services/net/model_topic.dart';
-import 'package:flutter_web/services/net/web_repository.dart';
+import 'package:flutter_web/services/services.dart';
 
 class StateArticleDetail extends ViewStateModel {
   ModelTopic get topic => _topic;
