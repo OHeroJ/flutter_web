@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loveli_core/loveli_core.dart';
 import 'package:flutter_web/states/states.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown_widget/markdown_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PageArticleDetail extends StatelessWidget {
@@ -20,12 +20,22 @@ class PageArticleDetail extends StatelessWidget {
         String content = '# ${model.topic.title}\n' + model.topic.content;
         return Container(
           padding: EdgeInsets.all(20),
-          child: Markdown(
+          child: MarkdownWidget(
             data: content,
-            padding: EdgeInsets.fromLTRB(0, 50, 0, 100),
-            onTapLink: (url) {
-              launch(url);
-            },
+            childMargin: EdgeInsets.only(top: 16),
+            styleConfig: StyleConfig(
+                ulConfig: UlConfig(
+                    textStyle: TextStyle(fontSize: 16, height: 1.5),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    dotSize: 8,
+                    dotMargin: EdgeInsets.only(top: 9, right: 8)),
+                pConfig: PConfig(
+                    linkStyle: TextStyle(
+                        fontSize: 16, height: 1.5, color: Color(0xffEF543C)),
+                    textStyle: TextStyle(fontSize: 16, height: 1.5),
+                    onLinkTap: (url) {
+                      launch(url);
+                    })),
           ),
         );
       },
