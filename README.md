@@ -14,3 +14,10 @@ flutter config --enable-web
 
 ![](https://github.com/OHeroJ/flutter_web/blob/master/preview/web.gif?raw=true)
 
+## 联系
+
+更多干货技巧，欢迎关注 **Oldbirds** 公众号
+
+![](https://github.com/OHeroJ/flutter_web/blob/master/preview/oldbirds.png?raw=true)
+
+
