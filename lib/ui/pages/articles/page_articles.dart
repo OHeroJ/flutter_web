@@ -41,7 +41,7 @@ class PageArticles extends StatelessWidget {
                     item,
                     onTap: () {
                       locator<ServiceNavigation>().navigateTo(
-                          ArticleDetailRoute,
+                          RouteArticleDetail,
                           queryParams: {'id': item.id.toString()});
                     },
                   );

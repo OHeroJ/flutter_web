@@ -18,12 +18,12 @@ class NavigationDrawer extends StatelessWidget {
           NavBarItem(
             title: '文章',
             icon: Icons.book,
-            navigationPath: ArticlesRoute,
+            navigationPath: RouteArticles,
           ),
           NavBarItem(
             title: '关于',
             icon: Icons.help,
-            navigationPath: AboutRoute,
+            navigationPath: RouteAbout,
           )
         ],
       ),

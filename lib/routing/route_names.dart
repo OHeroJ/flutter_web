@@ -1,4 +1,5 @@
-const String HomeRoute = "home";
-const String AboutRoute = "about";
-const String ArticlesRoute = "articles";
-const String ArticleDetailRoute = "article/detail";
+const String RouteHome = "home";
+const String RouteAbout = "about";
+const String RouteArticles = "articles";
+const String RouteArticleDetail = "article/detail";
+const String RouteLogin = "login";

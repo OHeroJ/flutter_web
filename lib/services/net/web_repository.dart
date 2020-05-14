@@ -1,5 +1,8 @@
 import 'package:flutter_web/services/net/models/model_page_data.dart';
+import 'package:flutter_web/services/net/models/model_token.dart';
+import 'package:flutter_web/services/net/models/model_user.dart';
 import 'models/model_topic.dart';
+import 'package:dio/dio.dart';
 import 'models/api.dart';
 
 class WebRepository {
@@ -16,5 +19,12 @@ class WebRepository {
     var response = await http.get('/topic/$topicId');
     Map data = response.data;
     return ModelTopic.fromMap(data['topic']);
+  }
+
+  Future<ModelToken> login(String email, String password) async {
+    var response = await http.post('/users/login',
+        data: FormData.fromMap({'email': email, 'password': password}));
+    Map data = response.data;
+    return ModelToken.fromMap(data);
   }
 }

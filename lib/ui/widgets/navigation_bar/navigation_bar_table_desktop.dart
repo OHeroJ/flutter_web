@@ -17,15 +17,20 @@ class NavigationBarTableDesktop extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 20),
             child: NavBarLogo(
-              navigationPath: HomeRoute,
+              navigationPath: RouteHome,
             ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               NavBarItem(
+                title: '登录',
+                navigationPath: RouteLogin,
+              ),
+              SizedBox(width: 20),
+              NavBarItem(
                 title: '关于',
-                navigationPath: AboutRoute,
+                navigationPath: RouteAbout,
               ),
               SizedBox(width: 20),
               Consumer<StateTheme>(

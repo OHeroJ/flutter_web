@@ -8,19 +8,21 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   var routingData = settings.name.getRoutingData;
 
   switch (routingData.route) {
-    case HomeRoute:
+    case RouteHome:
       return _getPageRoute(child: PageHome(), settings: settings);
-    case AboutRoute:
+    case RouteAbout:
       return _getPageRoute(child: PageAbout(), settings: settings);
-    case ArticlesRoute:
+    case RouteArticles:
       return _getPageRoute(child: PageArticles(), settings: settings);
-    case ArticleDetailRoute:
+    case RouteArticleDetail:
       var id = int.tryParse(routingData['id']);
       return _getPageRoute(
           child: PageArticleDetail(
             id: id,
           ),
           settings: settings);
+    case RouteLogin:
+      return _getPageRoute(child: PageLogin(), settings: settings);
     default:
       return _getPageRoute(child: PageHome(), settings: settings);
   }

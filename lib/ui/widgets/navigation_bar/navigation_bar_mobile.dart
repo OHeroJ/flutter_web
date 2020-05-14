@@ -21,7 +21,7 @@ class NavigationBarMobile extends StatelessWidget {
             },
           ),
           NavBarLogo(
-            navigationPath: HomeRoute,
+            navigationPath: RouteHome,
           )
         ],
       ),

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/routing/routing.dart';
-import 'package:flutter_web/services/services.dart';
 import 'package:provider/provider.dart';
+import 'package:loveli_core/loveli_core.dart';
 import 'locator.dart';
+import 'routing/routing.dart';
+import 'services/services.dart';
 import 'states/states.dart';
 import 'ui/ui.dart';
 
-void main() {
+void main() async {
   setupLocator();
+  // 初始化
+  await SpUtil.getInstance();
   runApp(Wrapper(
     child: MyApp(),
   ));
@@ -37,13 +40,12 @@ class MyApp extends StatelessWidget {
           title: 'OldBird',
           debugShowCheckedModeBanner: false,
           theme: themeState.theme,
-          home: LayoutTemplate(),
           builder: (context, child) => LayoutTemplate(
             child: child,
           ),
           navigatorKey: locator<ServiceNavigation>().navigatorKey,
           onGenerateRoute: generateRoute,
-          initialRoute: HomeRoute,
+          initialRoute: RouteHome,
         );
       },
     );

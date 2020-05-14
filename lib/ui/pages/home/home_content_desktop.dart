@@ -17,7 +17,7 @@ class HomeContentDesktop extends StatelessWidget {
           child: Center(
             child: CallToAction(
               onPressed: () =>
-                  locator<ServiceNavigation>().navigateTo(ArticlesRoute),
+                  locator<ServiceNavigation>().navigateTo(RouteArticles),
               title: '进入阅读',
             ),
           ),

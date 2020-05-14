@@ -80,7 +80,7 @@ class ViewStateModel extends ChangeNotifier {
     _viewStateError = ViewStateError(
       errorType,
       message: message,
-      errorMessage: e.toStr(),
+      errorMessage: e.toString(),
     );
     printErrorStack(e, stackTrace);
     onError(viewStateError);
