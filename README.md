@@ -18,6 +18,6 @@ flutter config --enable-web
 
 更多干货技巧，欢迎关注 **Oldbirds** 公众号
 
-![](https://github.com/OHeroJ/flutter_web/blob/master/preview/oldbirds.png?raw=true)
+<img src="https://github.com/OHeroJ/flutter_web/blob/master/preview/oldbirds.png?raw=true" width = "120" height = "120" alt="Oldbirds" />
 
 
