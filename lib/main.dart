@@ -31,7 +31,9 @@ class Wrapper extends StatelessWidget {
           ChangeNotifierProvider(
             create: (_) => StateTheme(),
           ),
-          ChangeNotifierProvider(create: (_) => GlobalUserState()),
+          ChangeNotifierProvider(
+            create: (_) => GlobalUserState(),
+          ),
         ],
         child: child,
       ),

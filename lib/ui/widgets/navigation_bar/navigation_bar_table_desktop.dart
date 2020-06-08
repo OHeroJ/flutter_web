@@ -23,9 +23,20 @@ class NavigationBarTableDesktop extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              NavBarItem(
-                title: '登录',
-                navigationPath: RouteLogin,
+              Consumer<GlobalUserState>(
+                builder: (context, state, _) {
+                  if (state.isLogin) {
+                    return NavBarItem(
+                      title: 'Admin',
+                      navigationPath: RouteAdmin,
+                    );
+                  } else {
+                    return NavBarItem(
+                      title: '登录',
+                      navigationPath: RouteLogin,
+                    );
+                  }
+                },
               ),
               SizedBox(width: 20),
               NavBarItem(

@@ -5,11 +5,12 @@ class MenuItem {
   String title;
   List<MenuItem> child;
 
-  MenuItem.fromMap(Map json) {
+  MenuItem.fromMap(
+    Map json,
+  ) {
     title = json['title'];
-    child = ValueUtil.toList(json['child'])
-        .map((j) => MenuItem.fromMap(j))
-        .toList();
+    List children = ValueUtil.toList(json['child']);
+    child = children.map((j) => MenuItem.fromMap(j)).toList();
   }
 }
 
@@ -20,6 +21,11 @@ class PageAdmin extends StatelessWidget {
       "child": [
         {
           "title": "分类",
+          "child": [
+            {
+              "title": "测试",
+            }
+          ]
         },
         {
           "title": "标签",
@@ -43,9 +49,12 @@ class PageAdmin extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(left: 10),
                 width: 150,
-                child: _buildMenu(menus),
+                child: ListView.builder(
+                  itemBuilder: (context, index) =>
+                      MenuItemView(item: menus[index]),
+                  itemCount: menus.length,
+                ),
               ),
               Expanded(
                 child: Container(
@@ -57,27 +66,28 @@ class PageAdmin extends StatelessWidget {
           )),
     );
   }
+}
 
-  Widget _buildMenu(List<MenuItem> items, {int level = 0}) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: items.map((item) => _buildMenuItem(item, level)).toList());
+class MenuItemView extends StatelessWidget {
+  final MenuItem item;
+  MenuItemView({this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildMenus(item);
   }
 
-  Widget _buildMenuItem(MenuItem item, int level) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: Text(item.title),
-            margin: EdgeInsets.only(left: 16 * level.toDouble(), top: 10),
-          ),
-          item.child.length > 0
-              ? _buildMenu(item.child, level: level + 1)
-              : Container()
-        ],
-      ),
-    );
+  Widget _buildMenus(MenuItem root) {
+    if (root.child.isEmpty) {
+      return ListTile(
+        title: Text(root.title),
+      );
+    } else {
+      return ExpansionTile(
+        key: PageStorageKey<MenuItem>(root),
+        title: Text(root.title),
+        children: root.child.map(_buildMenus).toList(),
+      );
+    }
   }
 }

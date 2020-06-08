@@ -10,10 +10,7 @@ import 'global_user_state.dart';
 class StateLogin extends ViewStateModel {
   final GlobalUserState globalUserState;
 
-  StateLogin({@required this.globalUserState}) {
-    _agreeProtocol =
-        SpUtil.getBool(Macro.saveKeyRemindAgreeProtocol, defValue: false);
-  }
+  StateLogin({@required this.globalUserState});
 
   final repository = locator<WebRepository>();
 
@@ -25,9 +22,6 @@ class StateLogin extends ViewStateModel {
 
   bool _enableLogin = false;
   bool get enableLogin => _enableLogin;
-
-  bool _agreeProtocol;
-  bool get agreeProtocol => _agreeProtocol;
 
   bool get sending => viewState == ViewState.busy;
 
@@ -41,17 +35,11 @@ class StateLogin extends ViewStateModel {
     changeEnableLogin();
   }
 
-  void setAgreeProtocol(bool agree) {
-    _agreeProtocol = agree;
-    changeEnableLogin();
-  }
-
   void changeEnableLogin() {
     if (_email != null &&
         _email.isNotEmpty &&
         _password != null &&
-        _password.isNotEmpty &&
-        _agreeProtocol) {
+        _password.isNotEmpty) {
       _enableLogin = true;
     } else {
       _enableLogin = false;
@@ -72,7 +60,6 @@ class StateLogin extends ViewStateModel {
       showToast("请输入 6 位以上密码");
       return null;
     }
-    SpUtil.putBool(Macro.saveKeyRemindAgreeProtocol, true);
     setBusy();
     try {
       final result = await repository.login(email: email, pwd: password);
