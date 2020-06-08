@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web/ui/pages/layout_template/layout_admin_template.dart';
 import 'package:flutter_web/ui/ui.dart';
+import 'package:loveli_core/loveli_core.dart';
 
 import 'route_names.dart';
 import 'routing_data.dart';
@@ -25,7 +26,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         settings: settings,
       );
     case RouteArticleDetail:
-      var id = routingData['RouteArticleDetail'];
+      var id = ValueUtil.toStr(routingData['topicId']);
       return _getPageRoute(
         child: PageArticleDetail(
           topicId: id,
