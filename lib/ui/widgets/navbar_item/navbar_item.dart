@@ -17,7 +17,10 @@ class NavBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var model = ModelNavBarItem(
-        title: title, navigationPath: navigationPath, iconData: icon);
+      title: title,
+      navigationPath: navigationPath,
+      iconData: icon,
+    );
 
     return GestureDetector(
       onTap: () {

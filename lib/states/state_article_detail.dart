@@ -1,15 +1,27 @@
-import 'package:loveli_core/loveli_core.dart';
 import 'package:flutter_web/locator.dart';
+import 'package:flutter_web/model/model.dart';
 import 'package:flutter_web/services/services.dart';
+import 'package:loveli_core/loveli_core.dart';
 
 class StateArticleDetail extends ViewStateModel {
-  ModelTopic get topic => _topic;
-  ModelTopic _topic;
+  final String topicId;
 
-  Future<ModelTopic> getTopic(int topicId) async {
+  StateArticleDetail({this.topicId});
+
+  Topic _topic;
+  Topic get topic => _topic;
+
+  final repository = locator<WebRepository>();
+
+  Future<Topic> loadTopic() async {
     setBusy();
-    _topic = await locator<WebRepository>().getTopicDetail(topicId);
-    setIdle();
-    return _topic;
+    try {
+      _topic = await repository.topicDetail(topicId);
+      setIdle();
+      return _topic;
+    } catch (e, s) {
+      setError(e, s);
+      return null;
+    }
   }
 }

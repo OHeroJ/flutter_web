@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class ServiceNavigation {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
   Future<dynamic> navigateTo(String routeName,
       {Map<String, String> queryParams}) {
     if (queryParams != null) {

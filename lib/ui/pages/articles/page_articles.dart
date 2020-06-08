@@ -6,12 +6,13 @@ import 'package:flutter_web/routing/route_names.dart';
 import 'package:flutter_web/ui/widgets/article_details/article_item_widget.dart';
 import 'package:flutter_web/states/states.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_web/model/model.dart';
 
 class PageArticles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderWidget<StateArticles>(
-      model: StateArticles(),
+      model: StateArticles('D482DDC3-D723-4F7A-8F31-6A0D399F3A27'),
       onModelReady: (model) => model.initData(),
       builder: (context, model, child) {
         if (model.viewState == ViewState.busy) {
@@ -26,26 +27,26 @@ class PageArticles extends StatelessWidget {
         }
 
         return SmartRefresher(
-            controller: model.refreshController,
-            header: WaterDropHeader(),
-            footer: ClassicFooter(),
-            onRefresh: model.refresh,
-            onLoading: model.loadMore,
-            enablePullUp: true,
-            enablePullDown: true,
-            child: ListView.builder(
-                itemCount: model.list.length,
-                itemBuilder: (context, index) {
-                  ModelTopic item = model.list[index];
-                  return ArticleItemWidget(
-                    item,
-                    onTap: () {
-                      locator<ServiceNavigation>().navigateTo(
-                          RouteArticleDetail,
-                          queryParams: {'id': item.id.toString()});
-                    },
-                  );
-                }));
+          controller: model.refreshController,
+          header: WaterDropHeader(),
+          footer: ClassicFooter(),
+          onRefresh: model.refresh,
+          onLoading: model.loadMore,
+          enablePullUp: model.list.isNotEmpty,
+          enablePullDown: model.list.isNotEmpty,
+          child: ListView.builder(
+              itemCount: model.list.length,
+              itemBuilder: (context, index) {
+                Topic item = model.list[index];
+                return ArticleItemWidget(
+                  item,
+                  onTap: () {
+                    locator<ServiceNavigation>().navigateTo(RouteArticleDetail,
+                        queryParams: {'topicId': item.id});
+                  },
+                );
+              }),
+        );
       },
     );
   }

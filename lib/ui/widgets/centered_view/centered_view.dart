@@ -3,7 +3,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 class CenteredView extends StatelessWidget {
   final Widget child;
-  const CenteredView({Key key, this.child}) : super(key: key);
+  const CenteredView({
+    Key key,
+    this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

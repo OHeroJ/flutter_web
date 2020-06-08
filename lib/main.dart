@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:loveli_core/loveli_core.dart';
+import 'package:provider/provider.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
 import 'locator.dart';
 import 'routing/routing.dart';
 import 'services/services.dart';
 import 'states/states.dart';
-import 'ui/ui.dart';
 
 void main() async {
   setupLocator();
@@ -18,36 +20,42 @@ void main() async {
 
 class Wrapper extends StatelessWidget {
   final Widget child;
-
   Wrapper({this.child});
-
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(
-        create: (_) => StateTheme(),
-      )
-    ], child: child);
+    return OKToast(
+      dismissOtherOnShow: true,
+      textPadding: EdgeInsets.all(20),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => StateTheme(),
+          ),
+          ChangeNotifierProvider(create: (_) => GlobalUserState()),
+        ],
+        child: child,
+      ),
+    );
   }
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<StateTheme>(
-      builder: (ctx, themeState, child) {
-        return MaterialApp(
-          title: 'OldBird',
-          debugShowCheckedModeBanner: false,
-          theme: themeState.theme,
-          builder: (context, child) => LayoutTemplate(
-            child: child,
-          ),
-          navigatorKey: locator<ServiceNavigation>().navigatorKey,
-          onGenerateRoute: generateRoute,
-          initialRoute: RouteHome,
-        );
-      },
+    return RefreshConfiguration(
+      hideFooterWhenNotFull: true,
+      child: Consumer<StateTheme>(
+        builder: (ctx, themeState, child) {
+          return MaterialApp(
+            title: 'OldBird',
+            debugShowCheckedModeBanner: false,
+            theme: themeState.theme,
+            navigatorKey: locator<ServiceNavigation>().navigatorKey,
+            onGenerateRoute: generateRoute,
+            initialRoute: RouteHome,
+          );
+        },
+      ),
     );
   }
 }

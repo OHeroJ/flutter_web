@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web/ui/pages/layout_template/layout_admin_template.dart';
 import 'package:flutter_web/ui/ui.dart';
 
 import 'route_names.dart';
@@ -9,29 +10,62 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
   switch (routingData.route) {
     case RouteHome:
-      return _getPageRoute(child: PageHome(), settings: settings);
-    case RouteAbout:
-      return _getPageRoute(child: PageAbout(), settings: settings);
-    case RouteArticles:
-      return _getPageRoute(child: PageArticles(), settings: settings);
-    case RouteArticleDetail:
-      var id = int.tryParse(routingData['id']);
       return _getPageRoute(
-          child: PageArticleDetail(
-            id: id,
-          ),
-          settings: settings);
+        child: PageHome(),
+        settings: settings,
+      );
+    case RouteAbout:
+      return _getPageRoute(
+        child: PageAbout(),
+        settings: settings,
+      );
+    case RouteArticles:
+      return _getPageRoute(
+        child: PageArticles(),
+        settings: settings,
+      );
+    case RouteArticleDetail:
+      var id = routingData['RouteArticleDetail'];
+      return _getPageRoute(
+        child: PageArticleDetail(
+          topicId: id,
+        ),
+        settings: settings,
+      );
     case RouteLogin:
-      return _getPageRoute(child: PageLogin(), settings: settings);
+      return _getPageRoute(
+        child: PageLogin(),
+        settings: settings,
+      );
+    case RouteAdmin:
+      return _getAdminPageRoute(
+        child: PageAdmin(),
+        settings: settings,
+      );
     default:
-      return _getPageRoute(child: PageHome(), settings: settings);
+      return _getPageRoute(
+        child: PageHome(),
+        settings: settings,
+      );
   }
+}
+
+PageRoute _getAdminPageRoute(
+    {@required Widget child, @required RouteSettings settings}) {
+  return _FadeRoute(
+      child: LayoutAdminTemplate(
+        child: child,
+      ),
+      routeName: settings.name);
 }
 
 PageRoute _getPageRoute(
     {@required Widget child, @required RouteSettings settings}) {
-//  return MaterialPageRoute(builder: (context) => child);
-  return _FadeRoute(child: child, routeName: settings.name);
+  return _FadeRoute(
+      child: LayoutTemplate(
+        child: child,
+      ),
+      routeName: settings.name);
 }
 
 class _FadeRoute extends PageRouteBuilder {

@@ -1,30 +1,58 @@
-import 'package:flutter_web/services/net/models/model_page_data.dart';
-import 'package:flutter_web/services/net/models/model_token.dart';
-import 'package:flutter_web/services/net/models/model_user.dart';
-import 'models/model_topic.dart';
 import 'package:dio/dio.dart';
-import 'models/api.dart';
+import 'api.dart';
+import 'models.dart';
+import 'package:flutter_web/model/model.dart';
+import 'package:loveli_core/loveli_core.dart';
 
 class WebRepository {
-  Future<List<ModelTopic>> getTopics({int page = 1, int per = 10}) async {
-    var response = await http
-        .get('/topic/list', queryParameters: {"page": page, "per": per});
+  // Auth
+  Future<ModelLogin> login({String email, String pwd}) async {
+    var response = await http.post("/auth/login",
+        data: FormData.fromMap({"email": email, "password": pwd}));
     Map data = response.data;
-    return ModelPageData.fromMap(data).data.map<ModelTopic>((item) {
-      return ModelTopic.fromMap(item['topic']);
-    }).toList();
+    return ModelLogin.fromMap(data);
   }
 
-  Future<ModelTopic> getTopicDetail(int topicId) async {
-    var response = await http.get('/topic/$topicId');
-    Map data = response.data;
-    return ModelTopic.fromMap(data['topic']);
+  // Subject
+  Future<List<Subject>> subjectAll() async {
+    var response = await http.get("/subject/all");
+    List data = ValueUtil.toList(response.data);
+    return data.map((item) => Subject.fromMap(item)).toList();
   }
 
-  Future<ModelToken> login(String email, String password) async {
-    var response = await http.post('/users/login',
-        data: FormData.fromMap({'email': email, 'password': password}));
+  Future<ModelPage<Topic>> subjectTopics(String subjectId,
+      {int page, int per = 10}) async {
+    var response = await http.get("/subject/$subjectId/topics",
+        queryParameters: {"per": per, "page": page});
     Map data = response.data;
-    return ModelToken.fromMap(data);
+    return ModelPage<Topic>.fromMap(data, transform: (json) {
+      return Topic.fromMap(json);
+    });
+  }
+
+  Future<Topic> topicDetail(String topicId) async {
+    var response = await http.get("/topic/$topicId");
+    Map data = response.data;
+    return Topic.fromMap(data);
+  }
+
+  Future<ModelPage<Booklet>> booklets({int page, int per = 10}) async {
+    var response = await http.get('/booklet/list');
+    Map data = response.data;
+    return ModelPage<Booklet>.fromMap(data, transform: (json) {
+      return Booklet.fromMap(json);
+    });
+  }
+
+  Future<Booklet> bookletDetail(String bookletId) async {
+    var response = await http.get("/booklet/$bookletId");
+    Map data = response.data;
+    return Booklet.fromMap(data);
+  }
+
+  Future<List<Catalog>> bookletCatalogs(String catalogId) async {
+    var response = await http.get("/booklet/catalog/$catalogId");
+    List data = response.data;
+    return data.map((e) => Catalog.fromMap(e)).toList();
   }
 }

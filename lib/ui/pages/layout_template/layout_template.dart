@@ -6,14 +6,17 @@ import '../../widgets/widgets.dart';
 class LayoutTemplate extends StatelessWidget {
   final Widget child;
 
-  LayoutTemplate({Key key, this.child}) : super(key: key);
+  LayoutTemplate({
+    Key key,
+    this.child,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (context, sizingInfo) {
         return Scaffold(
-            drawer: sizingInfo.deviceScreenType == DeviceScreenType.Mobile
+            drawer: sizingInfo.deviceScreenType == DeviceScreenType.mobile
                 ? NavigationDrawer()
                 : null,
             body: CenteredView(
@@ -22,7 +25,7 @@ class LayoutTemplate extends StatelessWidget {
                   NavigationBar(),
                   Expanded(
                     child: child,
-                  )
+                  ),
                 ],
               ),
             ));

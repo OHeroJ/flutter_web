@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_web/states/state_login.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-
+import 'package:provider/provider.dart';
 import 'package:loveli_core/loveli_core.dart';
 
 class PageLogin extends StatelessWidget {
@@ -10,7 +10,7 @@ class PageLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return ProviderWidget<StateLogin>(
-      model: StateLogin(),
+      model: StateLogin(globalUserState: Provider.of(context)),
       builder: (context, state, _) {
         return Scaffold(
           body: ScreenTypeLayout(

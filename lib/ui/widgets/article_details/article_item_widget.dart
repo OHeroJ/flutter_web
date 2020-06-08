@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_web/services/services.dart';
+import 'package:flutter_web/model/model.dart';
 
 class ArticleItemWidget extends StatelessWidget {
-  final ModelTopic item;
+  final Topic item;
   final GestureTapCallback onTap;
 
   ArticleItemWidget(this.item, {this.onTap});

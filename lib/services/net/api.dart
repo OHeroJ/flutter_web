@@ -6,7 +6,7 @@ final Http http = Http();
 class Http extends BaseHttp {
   @override
   void init() {
-    options.baseUrl = 'https://sb.loveli.site/api';
+    options.baseUrl = 'http://31h27e0026.qicp.vip/api';
     interceptors.add(WebApiInterceptor());
   }
 }
@@ -33,7 +33,7 @@ class ResponseData extends BaseResponseData {
   bool get success => code == 0;
 
   ResponseData.fromJson(Map<String, dynamic> json) {
-    code = json['status'];
+    code = json['code'];
     message = json['message'];
     data = json['data'];
   }

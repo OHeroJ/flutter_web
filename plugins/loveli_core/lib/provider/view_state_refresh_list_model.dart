@@ -67,7 +67,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
         notifyListeners();
       }
       return data;
-    } catch (e, s) {
+    } catch (e, _) {
       _currentPageNum -= 1;
       refreshController.loadFailed();
       return null;
