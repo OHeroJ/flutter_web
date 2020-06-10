@@ -1,92 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:loveli_core/loveli_core.dart';
-
-class MenuItem {
-  String title;
-  List<MenuItem> child;
-
-  MenuItem.fromMap(
-    Map json,
-  ) {
-    title = json['title'];
-    List children = ValueUtil.toList(json['child']);
-    child = children.map((j) => MenuItem.fromMap(j)).toList();
-  }
-}
+import 'package:flutter_web/states/states.dart';
+import 'package:provider/provider.dart';
 
 class PageAdmin extends StatelessWidget {
-  final List menus = [
-    {
-      "title": "文章",
-      "child": [
-        {
-          "title": "分类",
-          "child": [
-            {
-              "title": "测试",
-            }
-          ]
-        },
-        {
-          "title": "标签",
-        },
-        {
-          "title": "文章",
-        },
-      ]
-    },
-    {"title": "小册", "child": []},
-    {"title": "用户", "child": []}
-  ].map((e) => MenuItem.fromMap(e)).toList();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF5F7FE),
-      body: Container(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: 150,
-                child: ListView.builder(
-                  itemBuilder: (context, index) =>
-                      MenuItemView(item: menus[index]),
-                  itemCount: menus.length,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.white,
-                  child: Text('right'),
-                ),
-              )
-            ],
-          )),
+    return ChangeNotifierProvider(
+      create: (context) => StateAdminMenu(),
+      builder: (context, child) {
+        return Scaffold(
+          backgroundColor: Color(0xffF5F7FE),
+          body: Container(
+              padding: EdgeInsets.only(top: 16, right: 16, bottom: 16),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    width: 150,
+                    child: Consumer<StateAdminMenu>(
+                      builder: (context, state, child) {
+                        return ListView.builder(
+                          itemBuilder: (context, index) => MenuItemView(
+                            item: state.menus[index],
+                            onTap: (item) {
+                              state.selected(item);
+                            },
+                          ),
+                          itemCount: state.menus.length,
+                        );
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                      height: MediaQuery.of(context).size.height - 64 - 32,
+                      child: Consumer<StateAdminMenu>(
+                        builder: (context, state, child) {
+                          return state.selectItem.widget;
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              )),
+        );
+      },
     );
   }
 }
 
 class MenuItemView extends StatelessWidget {
   final MenuItem item;
-  MenuItemView({this.item});
+  final void Function(MenuItem item) onTap;
+  MenuItemView({this.item, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return _buildMenus(item);
+    return _buildMenus(
+      item,
+    );
   }
 
-  Widget _buildMenus(MenuItem root) {
-    if (root.child.isEmpty) {
-      return ListTile(
-        title: Text(root.title),
+  Widget _buildMenus(MenuItem root, {int level = 0}) {
+    if (root.child == null || root.child.isEmpty) {
+      return Container(
+        color: root.isSelect ? Colors.white : null,
+        child: ListTile(
+          onTap: () {
+            onTap(root);
+          },
+          title: Padding(
+            padding: EdgeInsets.only(left: 10.0 * level),
+            child: Text(
+              root.title,
+              style: TextStyle(
+                  color: root.isSelect ? Colors.red : Color(0xff333333)),
+            ),
+          ),
+        ),
       );
     } else {
       return ExpansionTile(
         key: PageStorageKey<MenuItem>(root),
         title: Text(root.title),
-        children: root.child.map(_buildMenus).toList(),
+        children:
+            root.child.map((e) => _buildMenus(e, level: level + 1)).toList(),
       );
     }
   }
