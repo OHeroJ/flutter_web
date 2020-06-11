@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:getflutter/getflutter.dart';
 
 import '../table/table.dart';
 
@@ -123,13 +124,17 @@ class PageAdminTag extends StatelessWidget {
             alignment: WrapAlignment.center,
             spacing: 10,
             children: [
-              OutlineButton(
-                child: Text('删除'),
+              GFButton(
+                text: '删除',
                 onPressed: () {},
+                shape: GFButtonShape.pills,
+                size: GFSize.SMALL,
               ),
-              OutlineButton(
-                child: Text('编辑'),
+              GFButton(
+                text: '编辑',
                 onPressed: () {},
+                shape: GFButtonShape.pills,
+                size: GFSize.SMALL,
               )
             ],
           );
@@ -173,9 +178,20 @@ class PageAdminTag extends StatelessWidget {
           ],
         ),
         footer: Container(
-          height: 44,
-          child: Row(
-            children: [Text('Rows per page:')],
+          padding: EdgeInsets.only(right: 20, top: 5, bottom: 15),
+          alignment: Alignment.centerRight,
+          child: Wrap(
+            spacing: 10,
+            children: [
+              OutlineButton(
+                child: Text('上一页'),
+                onPressed: () {},
+              ),
+              OutlineButton(
+                child: Text('下一页'),
+                onPressed: () {},
+              )
+            ],
           ),
         ),
       ),

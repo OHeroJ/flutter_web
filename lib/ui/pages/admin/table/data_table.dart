@@ -214,6 +214,7 @@ class _ResponsiveDatableState extends State<ResponsiveDatable> {
           Expanded(
             child: _buildTable(),
           ),
+          if (widget.footer != null) widget.footer
         ],
       ),
     );
@@ -245,8 +246,6 @@ class _ResponsiveDatableState extends State<ResponsiveDatable> {
               ],
             ),
           ),
-          //footer
-          if (widget.footer != null) widget.footer
         ],
       ),
     );
