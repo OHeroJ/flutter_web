@@ -41,17 +41,12 @@ class StateAdminTag extends ViewStateModel {
 
   void deleteTag(Tag tag, context) {
     repository
-        .deleteTag(
-      id: tag.id,
-      token: globalUser.token.accessToken,
-    )
-        .then(
-      (value) {
-        _tags.remove(tag);
-        notifyListeners();
-        showToast('删除成功', context: context);
-      },
-    );
+        .deleteTag(id: tag.id, token: globalUser.token.accessToken)
+        .then((value) {
+      _tags.remove(tag);
+      notifyListeners();
+      showToast('删除成功', context: context);
+    });
   }
 
   Future createTag(context) async {

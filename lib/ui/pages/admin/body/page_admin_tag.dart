@@ -73,7 +73,7 @@ class PageAdminTag extends StatelessWidget {
                   child: Row(
                     children: [
                       OutlineButton(
-                        child: Text('+ 添加分类'),
+                        child: Text('+ 添加标签'),
                         onPressed: () {
                           showDialog(
                             context: context,

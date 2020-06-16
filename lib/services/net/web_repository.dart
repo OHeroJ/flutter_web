@@ -14,13 +14,6 @@ class WebRepository {
     return ModelLogin.fromMap(data);
   }
 
-  // Subject
-  Future<List<Subject>> subjectAll() async {
-    var response = await http.get("/subject/all");
-    List data = ValueUtil.toList(response.data);
-    return data.map((item) => Subject.fromMap(item)).toList();
-  }
-
   Future<ModelPage<Topic>> subjectTopics(String subjectId,
       {int page, int per = 10}) async {
     var response = await http.get("/subject/$subjectId/topics",
@@ -57,6 +50,7 @@ class WebRepository {
     return data.map((e) => Catalog.fromMap(e)).toList();
   }
 
+  /// Tag 管理
   Future<List<Tag>> getAllTags() async {
     var response = await http.get('/tag/all');
     List data = response.data;
@@ -80,6 +74,39 @@ class WebRepository {
   Future deleteTag({String id, String token}) async {
     return await http.post(
       '/tag/delete/$id',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+  }
+
+  // Subject 管理
+  Future<List<Subject>> subjectAll() async {
+    var response = await http.get("/subject/all");
+    List data = ValueUtil.toList(response.data);
+    return data.map((item) => Subject.fromMap(item)).toList();
+  }
+
+  Future createSubject({
+    String name,
+    String remarks,
+    String cover,
+    String token,
+  }) async {
+    var response = await http.post(
+      '/subject/add',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap({
+        "name": name,
+        "remarks": remarks,
+        "cover": cover,
+      }),
+    );
+    Map data = response.data;
+    return Subject.fromMap(data);
+  }
+
+  Future deleteSubject({String id, String token}) async {
+    return await http.post(
+      '/subject/delete/$id',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
   }
