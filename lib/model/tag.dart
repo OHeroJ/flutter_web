@@ -11,4 +11,11 @@ class Tag implements Base {
     id = ValueUtil.toStr(json['id']);
     name = ValueUtil.toStr(json['name']);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+    };
+  }
 }

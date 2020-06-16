@@ -6,7 +6,8 @@ final Http http = Http();
 class Http extends BaseHttp {
   @override
   void init() {
-    options.baseUrl = 'http://31h27e0026.qicp.vip/api';
+    options.baseUrl =
+        'http://127.0.0.1:8080/api'; //'http://31h27e0026.qicp.vip/api';
     interceptors.add(WebApiInterceptor());
   }
 }

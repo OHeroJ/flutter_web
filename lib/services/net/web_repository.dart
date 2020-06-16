@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_web/states/global_user_state.dart';
 import 'api.dart';
 import 'models.dart';
 import 'package:flutter_web/model/model.dart';
@@ -54,5 +55,32 @@ class WebRepository {
     var response = await http.get("/booklet/catalog/$catalogId");
     List data = response.data;
     return data.map((e) => Catalog.fromMap(e)).toList();
+  }
+
+  Future<List<Tag>> getAllTags() async {
+    var response = await http.get('/tag/all');
+    List data = response.data;
+    return data.map((e) => Tag.fromMap(e)).toList();
+  }
+
+  Future createTag({
+    String name,
+    String remarks,
+    String token,
+  }) async {
+    var response = await http.post(
+      '/tag/add',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap({"name": name, "remarks": remarks}),
+    );
+    Map data = response.data;
+    return Tag.fromMap(data);
+  }
+
+  Future deleteTag({String id, String token}) async {
+    return await http.post(
+      '/tag/delete/$id',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
   }
 }
