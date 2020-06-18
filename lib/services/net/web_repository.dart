@@ -110,4 +110,44 @@ class WebRepository {
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
   }
+
+  // Topic
+  Future createTopic({
+    String title,
+    String content,
+    String subjectId,
+    String contentType,
+    List<String> tagIds,
+    String token,
+  }) async {
+    var response = await http.post(
+      '/subject/add',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap({
+        "title": title,
+        "content": content,
+        "subjectId": subjectId,
+        "contentType": contentType,
+        "tagIds": tagIds.join(','),
+      }),
+    );
+    Map data = response.data;
+    return Topic.fromMap(data);
+  }
+
+  Future<ModelPage<Topic>> getTopicList({int per, int page}) async {
+    var response = await http
+        .get("/topic/all", queryParameters: {"per": per, "page": page});
+    Map data = response.data;
+    return ModelPage<Topic>.fromMap(data, transform: (json) {
+      return Topic.fromMap(json);
+    });
+  }
+
+  Future deleteTopic({String id, String token}) async {
+    return await http.post(
+      '/topic/delete/$id',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+  }
 }

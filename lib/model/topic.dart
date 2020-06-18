@@ -72,4 +72,17 @@ class Topic implements Base {
     tags = ValueUtil.toList(json['tags']).map((j) => Tag.fromMap(j)).toList();
     content = ValueUtil.toStr(json['content']);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'subject': subject.toMap(),
+      'author': author.toMap(),
+      'tags': tags.map((e) => e.toMap()).toList(),
+      'title': title,
+      'contentType': contentType,
+      'remarks': remarks,
+      'content': content,
+    };
+  }
 }
