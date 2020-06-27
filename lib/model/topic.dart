@@ -7,6 +7,24 @@ import 'base.dart';
 
 enum TopicContentType { markdown, html }
 
+const _topicContentShowTypeMap = {
+  TopicContentType.markdown: '新增文章',
+  TopicContentType.html: '转发文章',
+};
+
+const _topicContentTypeMap = {
+  TopicContentType.markdown: 'markdown',
+  TopicContentType.html: 'html',
+};
+
+String topicContentTypeToShowString(TopicContentType type) {
+  return _topicContentShowTypeMap[type];
+}
+
+String topicContentTypeToString(TopicContentType type) {
+  return _topicContentTypeMap[type];
+}
+
 TopicContentType _topicContentType(String name) {
   if (name == 'markdown') {
     return TopicContentType.markdown;

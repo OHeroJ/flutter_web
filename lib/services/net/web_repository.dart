@@ -118,10 +118,12 @@ class WebRepository {
     String subjectId,
     String contentType,
     List<String> tagIds,
+    String remarks,
     String token,
+    String coverUrl,
   }) async {
     var response = await http.post(
-      '/subject/add',
+      '/topic/add',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
       data: FormData.fromMap({
         "title": title,
@@ -129,6 +131,9 @@ class WebRepository {
         "subjectId": subjectId,
         "contentType": contentType,
         "tagIds": tagIds.join(','),
+        "remarks": remarks,
+        "cover": coverUrl,
+        "weight": 1,
       }),
     );
     Map data = response.data;

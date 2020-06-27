@@ -108,41 +108,7 @@ class PageAdminArticle extends StatelessWidget {
                       OutlineButton(
                         child: Text('+ 添加文章'),
                         onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return ProviderWidget<StateAdminArticleAdd>(
-                                model: StateAdminArticleAdd(
-                                  articleState: state,
-                                ),
-                                onModelReady: (StateAdminArticleAdd addState) =>
-                                    addState.loadData(),
-                                builder: (
-                                  context,
-                                  StateAdminArticleAdd addState,
-                                  child,
-                                ) {
-                                  return Dialog(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width -
-                                          120,
-                                      height:
-                                          MediaQuery.of(context).size.height -
-                                              160,
-                                      padding: EdgeInsets.all(20),
-                                      child: addState.subjects.length > 0 &&
-                                              addState.tags.length > 0
-                                          ? _buildAddForm(
-                                              context,
-                                              addState,
-                                            )
-                                          : ViewStateBusyWidget(),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          );
+                          _showAddForm(context, state);
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -157,7 +123,7 @@ class PageAdminArticle extends StatelessWidget {
                     bottom: 10,
                   ),
                   child: Text(
-                    '标签列表',
+                    '文章列表',
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 )
@@ -186,10 +152,44 @@ class PageAdminArticle extends StatelessWidget {
     );
   }
 
+  _showAddForm(
+    BuildContext context,
+    StateAdminArticle articleState,
+  ) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ProviderWidget<StateAdminArticleAdd>(
+          model: StateAdminArticleAdd(
+            articleState: articleState,
+          ),
+          onModelReady: (StateAdminArticleAdd addState) => addState.loadData(),
+          builder: (context, StateAdminArticleAdd addState, child) {
+            return Dialog(
+              child: Container(
+                width: MediaQuery.of(context).size.width - 120,
+                height: MediaQuery.of(context).size.height - 160,
+                padding: EdgeInsets.all(20),
+                child: addState.subjects.length > 0 && addState.tags.length > 0
+                    ? _buildAddForm(
+                        context,
+                        addState,
+                      )
+                    : ViewStateBusyWidget(),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Widget _buildAddForm(
     BuildContext context,
     StateAdminArticleAdd addState,
   ) {
+    bool isMarkdown = addState.selectContentType == TopicContentType.markdown;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -200,40 +200,89 @@ class PageAdminArticle extends StatelessWidget {
           ),
           margin: EdgeInsets.only(bottom: 20),
         ),
-        Container(
-          child: PopupMenuButton<Subject>(
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              width: MediaQuery.of(context).size.width - 120 - 20 * 2,
-              child: addState.selectSubject == null
-                  ? Text('选择文章分类')
-                  : Text(addState.selectSubject.name),
-              padding: EdgeInsets.only(
-                top: 20,
-                bottom: 20,
-              ),
-            ),
-            tooltip: '选择文章分类',
-            onSelected: (subject) {
-              addState.setSubject(subject);
-            },
-            itemBuilder: (context) {
-              return addState.subjects.map((Subject e) {
-                return PopupMenuItem<Subject>(
-                  value: e,
-                  child: Text(e.name),
-                );
-              }).toList();
-            },
-          ),
-        ),
-        Container(
+        _buildSelectContentType(context, addState),
+        _buildSelectSubject(context, addState),
+        _buildSelectTags(context, addState),
+        _buildTitleRow(addState),
+        isMarkdown ? _buildContentRow(addState) : _buildUrlRow(addState),
+        _buildRemarksRow(addState),
+        _buildSubmitRow(addState, context),
+      ],
+    );
+  }
+
+  Container _buildSubmitRow(
+      StateAdminArticleAdd addState, BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      child: OutlineButton(
+        child: Text('提交'),
+        onPressed: () async {
+          var response = await addState.createTopic(context);
+          if (response != null) {
+            showToast('创建成功', context: context);
+            Navigator.of(context).pop();
+          }
+        },
+      ),
+    );
+  }
+
+  TextField _buildTitleRow(StateAdminArticleAdd addState) {
+    return TextField(
+      onChanged: (text) {
+        addState.setTitle(text);
+      },
+      decoration: InputDecoration(
+        labelText: '输入文章标题',
+      ),
+    );
+  }
+
+  TextField _buildRemarksRow(StateAdminArticleAdd addState) {
+    return TextField(
+      onChanged: (text) {
+        addState.setRemarks(text);
+      },
+      decoration: InputDecoration(
+        labelText: '输入文章简介',
+      ),
+    );
+  }
+
+  TextField _buildUrlRow(StateAdminArticleAdd addState) {
+    return TextField(
+      keyboardType: TextInputType.url,
+      onChanged: (text) {
+        addState.setContent(text);
+      },
+      decoration: InputDecoration(
+        labelText: '输入文章url',
+      ),
+    );
+  }
+
+  Container _buildContentRow(StateAdminArticleAdd addState) {
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: 250,
+      ),
+      child: TextField(
+        decoration: InputDecoration(labelText: '输入内容'),
+        onChanged: (text) {
+          addState.setContent(text);
+        },
+        minLines: 2,
+        maxLines: 5,
+      ),
+    );
+  }
+
+  Container _buildSelectContentType(
+      BuildContext context, StateAdminArticleAdd addState) {
+    return Container(
+      child: PopupMenuButton<TopicContentType>(
+        child: Container(
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
@@ -242,56 +291,90 @@ class PageAdminArticle extends StatelessWidget {
             ),
           ),
           width: MediaQuery.of(context).size.width - 120 - 20 * 2,
-          padding: EdgeInsets.only(top: 20, bottom: 20),
-          child: Wrap(
-            spacing: 20,
-            children: [
-              ...addState.selectTags.map((e) {
-                return _btnTag(e, addState);
-              }),
-              addState.selectTags.length < addState.tags.length
-                  ? _btnAddTag(addState)
-                  : Container(),
-            ],
+          child: addState.selectContentType == null
+              ? Text('选择文章类型')
+              : Text(topicContentTypeToShowString(addState.selectContentType)),
+          padding: EdgeInsets.only(
+            top: 20,
+            bottom: 20,
           ),
         ),
-        TextField(
-          onChanged: (text) {
-            addState.setTitle(text);
-          },
-          decoration: InputDecoration(
-            labelText: '输入标题',
-          ),
-        ),
-        Container(
-          constraints: BoxConstraints(
-            maxHeight: 250,
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              labelText: '输入内容',
+        tooltip: '选择文章类型',
+        onSelected: (type) {
+          addState.setContentType(type);
+        },
+        itemBuilder: (context) {
+          return addState.contentTypes.map((TopicContentType e) {
+            return PopupMenuItem<TopicContentType>(
+              value: e,
+              child: Text(topicContentTypeToShowString(e)),
+            );
+          }).toList();
+        },
+      ),
+    );
+  }
+
+  Container _buildSelectSubject(
+      BuildContext context, StateAdminArticleAdd addState) {
+    return Container(
+      child: PopupMenuButton<Subject>(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.grey,
+              ),
             ),
-            onChanged: (text) {
-              addState.setContent(text);
-            },
-            minLines: 2,
-            maxLines: 5,
+          ),
+          width: MediaQuery.of(context).size.width - 120 - 20 * 2,
+          child: addState.selectSubject == null
+              ? Text('选择文章分类')
+              : Text(addState.selectSubject.name),
+          padding: EdgeInsets.only(
+            top: 20,
+            bottom: 20,
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(top: 20),
-          child: OutlineButton(
-            child: Text('提交'),
-            onPressed: () async {
-              var response = await addState.createTopic(context);
-              if (response != null) {
-                showToast('创建成功', context: context);
-                Navigator.of(context).pop();
-              }
-            },
+        tooltip: '选择文章分类',
+        onSelected: (subject) {
+          addState.setSubject(subject);
+        },
+        itemBuilder: (context) {
+          return addState.subjects.map((Subject e) {
+            return PopupMenuItem<Subject>(
+              value: e,
+              child: Text(e.name),
+            );
+          }).toList();
+        },
+      ),
+    );
+  }
+
+  Container _buildSelectTags(
+      BuildContext context, StateAdminArticleAdd addState) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey,
           ),
         ),
-      ],
+      ),
+      width: MediaQuery.of(context).size.width - 120 - 20 * 2,
+      padding: EdgeInsets.only(top: 20, bottom: 20),
+      child: Wrap(
+        spacing: 20,
+        children: [
+          ...addState.selectTags.map((e) {
+            return _btnTag(e, addState);
+          }),
+          addState.selectTags.length < addState.tags.length
+              ? _btnAddTag(addState)
+              : Container(),
+        ],
+      ),
     );
   }
 

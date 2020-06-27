@@ -7,15 +7,24 @@ import 'package:loveli_core/loveli_core.dart';
 import 'package:oktoast/oktoast.dart';
 
 class StateAdminArticleAdd extends ViewStateModel {
-  String _title;
-  String _contentType;
-  String _content;
-
   final StateAdminArticle articleState;
 
   StateAdminArticleAdd({
     @required this.articleState,
   });
+
+  final List<TopicContentType> contentTypes = [
+    TopicContentType.html,
+    TopicContentType.markdown
+  ];
+
+  String _title;
+  String _content;
+
+  String _remarks;
+
+  TopicContentType _selectContentType = TopicContentType.markdown;
+  TopicContentType get selectContentType => _selectContentType;
 
   Subject _selectSubject;
   List<Tag> _selectTags = [];
@@ -51,12 +60,18 @@ class StateAdminArticleAdd extends ViewStateModel {
     notifyListeners();
   }
 
-  void setContentType(String contentType) {
-    _contentType = contentType;
+  void setContentType(TopicContentType contentType) {
+    _selectContentType = contentType;
+    _content = '';
+    notifyListeners();
   }
 
   void setContent(String content) {
     _content = content;
+  }
+
+  void setRemarks(String remarks) {
+    _remarks = remarks;
   }
 
   void addTag(Tag tag) {
@@ -69,9 +84,16 @@ class StateAdminArticleAdd extends ViewStateModel {
     notifyListeners();
   }
 
-  void addTopic(Topic topic) {}
+  void addTopic(Topic topic) {
+    articleState.addTopic(topic);
+  }
 
   Future createTopic(context) async {
+    if (_selectContentType == null) {
+      showToast('请填选择发布类型', context: context);
+      return;
+    }
+
     if (_title == null || _title.length == 0) {
       showToast('请填写标题', context: context);
       return;
@@ -91,10 +113,11 @@ class StateAdminArticleAdd extends ViewStateModel {
       Topic topic = await repository.createTopic(
         title: _title,
         content: _content,
-        contentType: _contentType,
+        contentType: topicContentTypeToString(_selectContentType),
         subjectId: _selectSubject.id,
         tagIds: _selectTags.map((e) => e.id).toList(),
         token: articleState.globalUser.token.accessToken,
+        remarks: _remarks,
       );
       addTopic(topic);
       return topic;

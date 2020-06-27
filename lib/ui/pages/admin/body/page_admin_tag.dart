@@ -22,7 +22,6 @@ class PageAdminTag extends StatelessWidget {
             return ViewStateBusyWidget();
           }
           List tags = state.tags.map((e) => e.toMap()).toList();
-//          return Text('$tags');
           return ResponsiveDatable(
             headers: [
               DatableHeader(
