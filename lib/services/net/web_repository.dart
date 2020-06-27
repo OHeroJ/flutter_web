@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_web/states/global_user_state.dart';
-import 'api.dart';
-import 'models.dart';
 import 'package:flutter_web/model/model.dart';
 import 'package:loveli_core/loveli_core.dart';
+
+import 'api.dart';
+import 'models.dart';
 
 class WebRepository {
   // Auth
@@ -154,5 +154,63 @@ class WebRepository {
       '/topic/delete/$id',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
+  }
+
+  /// booklet
+  Future<ModelPage<Booklet>> getBookletList({int per, int page}) async {
+    var response = await http
+        .get("/booklet/list", queryParameters: {"per": per, "page": page});
+    Map data = response.data;
+    return ModelPage<Booklet>.fromMap(data, transform: (json) {
+      return Booklet.fromMap(json);
+    });
+  }
+
+  Future<Booklet> createBooklet(
+      {String name, String remarks, String cover, String token}) async {
+    var response = await http.post(
+      '/booklet/add',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap({
+        'name': name,
+        'remarks': remarks,
+        'cover': cover,
+      }),
+    );
+    Map data = response.data;
+    return Booklet.fromMap(data);
+  }
+
+  Future<List<Catalog>> getCatalogs({String catalogId}) async {
+    var response = await http.get('/booklet/catalog/$catalogId');
+    List data = ValueUtil.toList(response.data);
+    return data.map((item) => Catalog.fromMap(item)).toList();
+  }
+
+  Future<Catalog> createCatalog({
+    String title,
+    String pid,
+    String path,
+    String content,
+    int level,
+    int order,
+    String remarks,
+    String token,
+  }) async {
+    var response = await http.post(
+      'booklet/catalog/add',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap({
+        'title': title,
+        'remarks': remarks,
+        'pid': pid,
+        'path': path,
+        'content': content,
+        'level': level,
+        'order': order,
+      }),
+    );
+    Map data = response.data;
+    return Catalog.fromMap(data);
   }
 }

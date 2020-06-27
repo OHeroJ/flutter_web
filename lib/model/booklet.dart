@@ -18,4 +18,12 @@ class Booklet extends Base {
     this.catalogId = ValueUtil.toStr(json['catalogId']);
     this.id = ValueUtil.toStr(json['id']);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "name": name,
+      "author": author.name,
+    };
+  }
 }

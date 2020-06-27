@@ -10,3 +10,4 @@ export 'state_admin_subject.dart';
 export 'state_admin_booklet.dart';
 export 'state_admin_user.dart';
 export 'state_admin_article_add.dart';
+export 'state_admin_catalog.dart';
