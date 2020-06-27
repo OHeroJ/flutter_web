@@ -7,16 +7,11 @@ import 'package:loveli_core/loveli_core.dart';
 import 'package:oktoast/oktoast.dart';
 
 class StateAdminArticle extends ViewStateModel {
-  String _title;
-  String _subjectId;
-  List<String> _tagIds;
-  String _contentType;
-  String _content;
-
   final GlobalUserState globalUser;
   StateAdminArticle({@required this.globalUser});
 
   List<Topic> _topics = [];
+
   List<Topic> get topics => _topics;
 
   final repository = locator<WebRepository>();
@@ -44,26 +39,6 @@ class StateAdminArticle extends ViewStateModel {
     }
   }
 
-  void setTitle(String title) {
-    _title = title;
-  }
-
-  void setSubjectId(String subjectId) {
-    _subjectId = subjectId;
-  }
-
-  void setContentType(String contentType) {
-    _contentType = contentType;
-  }
-
-  void setContent(String content) {
-    _content = content;
-  }
-
-  void setTagIds(List<String> tagIds) {
-    _tagIds = tagIds;
-  }
-
   void addTopic(Topic topic) {
     _topics.add(topic);
     notifyListeners();
@@ -77,28 +52,5 @@ class StateAdminArticle extends ViewStateModel {
       notifyListeners();
       showToast('删除成功', context: context);
     });
-  }
-
-  Future createTopic(context) async {
-    if (_title == null || _title.length == 0) {
-      showToast('请填写标题', context: context);
-      return;
-    }
-
-    try {
-      Topic topic = await repository.createTopic(
-        title: _title,
-        content: _content,
-        contentType: _contentType,
-        subjectId: _subjectId,
-        tagIds: _tagIds,
-        token: globalUser.token.accessToken,
-      );
-      addTopic(topic);
-      return topic;
-    } catch (e, s) {
-      setError(e, s);
-      return null;
-    }
   }
 }

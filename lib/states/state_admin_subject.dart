@@ -19,7 +19,7 @@ class StateAdminSubject extends ViewStateModel {
   loadSubjects() async {
     setBusy();
     try {
-      _subjects = await repository.subjectAll();
+      _subjects = await repository.getAllSubject();
       setIdle();
     } catch (e, s) {
       setError(e, s);

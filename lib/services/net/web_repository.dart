@@ -79,7 +79,7 @@ class WebRepository {
   }
 
   // Subject 管理
-  Future<List<Subject>> subjectAll() async {
+  Future<List<Subject>> getAllSubject() async {
     var response = await http.get("/subject/all");
     List data = ValueUtil.toList(response.data);
     return data.map((item) => Subject.fromMap(item)).toList();

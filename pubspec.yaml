@@ -32,6 +32,7 @@ dependencies:
 
   ## 组件库
   getflutter: ^1.0.11
+  flutter_tagging: ^2.2.0+3
 
 
 dev_dependencies:
