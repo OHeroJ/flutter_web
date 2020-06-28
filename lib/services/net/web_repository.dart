@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_web/model/model.dart';
 import 'package:loveli_core/loveli_core.dart';
 
@@ -198,7 +199,7 @@ class WebRepository {
     String token,
   }) async {
     var response = await http.post(
-      'booklet/catalog/add',
+      '/booklet/catalog/add',
       options: Options(headers: {'Authorization': 'Bearer $token'}),
       data: FormData.fromMap({
         'title': title,
@@ -208,6 +209,37 @@ class WebRepository {
         'content': content,
         'level': level,
         'order': order,
+      }),
+    );
+    Map data = response.data;
+    return Catalog.fromMap(data);
+  }
+
+  Future<Catalog> updateCatalog({
+    @required String id,
+    String title,
+    String pid,
+    String path,
+    String content,
+    int level,
+    int order,
+    String remarks,
+    String topicId,
+    String token,
+  }) async {
+    var response = await http.post(
+      '/booklet/catalog/update',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap({
+        'id': id,
+        'title': title,
+        'remarks': remarks,
+        'pid': pid,
+        'path': path,
+        'content': content,
+        'level': level,
+        'order': order,
+        'topicId': topicId,
       }),
     );
     Map data = response.data;

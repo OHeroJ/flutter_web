@@ -7,6 +7,7 @@ class Catalog extends Base {
   String pid;
   String title;
   String path;
+  String remarks;
 
   int level;
   int order;
@@ -22,6 +23,7 @@ class Catalog extends Base {
     this.level = ValueUtil.toInt(json['level']);
     this.order = ValueUtil.toInt(json['order']);
     this.topicId = ValueUtil.toStr(json['topicId']);
+    this.remarks = ValueUtil.toStr(json['remarks']);
     this.child =
         ValueUtil.toList(json['child']).map((e) => Catalog.fromMap(e)).toList();
   }
