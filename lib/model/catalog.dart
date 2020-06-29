@@ -15,6 +15,8 @@ class Catalog extends Base {
   String topicId;
   List<Catalog> child;
 
+  bool get noChild => child == null || child.length == 0;
+
   Catalog.fromMap(Map json) : super.fromMap(json) {
     this.id = ValueUtil.toStr(json['id']);
     this.pid = ValueUtil.toStr(json['pid']);

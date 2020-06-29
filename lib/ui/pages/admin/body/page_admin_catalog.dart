@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web/states/state_admin_catalog.dart';
 import 'package:flutter_web/states/states.dart';
 import 'package:loveli_core/loveli_core.dart';
 import 'package:provider/provider.dart';
@@ -76,9 +77,7 @@ class PageAdminCatalog extends StatelessWidget {
                           left: 15,
                         ),
                         child: state.currentTopic != null
-                            ? state.currentCatalogIsEdit
-                                ? _buildCatalogEditShow(state, context)
-                                : _buildCatalogNormalShow(state, context)
+                            ? _buildCatalogShow(state, context)
                             : Center(
                                 child: Text('暂无信息'),
                               ),
@@ -94,6 +93,64 @@ class PageAdminCatalog extends StatelessWidget {
     );
   }
 
+  Widget _buildCatalogShow(StateAdminCatalog state, BuildContext context) {
+    switch (state.currentCatalogState) {
+      case CatalogState.edit:
+        return _buildCatalogEditShow(state, context);
+      case CatalogState.add:
+        return _buildCatalogAddChildShow(state, context);
+      default:
+        return _buildCatalogNormalShow(state, context);
+    }
+  }
+
+  Widget _buildCatalogAddChildShow(
+    StateAdminCatalog state,
+    BuildContext context,
+  ) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            controller: TextEditingController(text: state.editName),
+            decoration: InputDecoration(
+              labelText: '标题',
+            ),
+            onChanged: (text) => state.setEditName(text),
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: TextEditingController(text: state.editOrder),
+            decoration: InputDecoration(
+              labelText: '序号',
+            ),
+            onChanged: (text) => state.setEditOrder(text),
+          ),
+          TextField(
+            controller: TextEditingController(text: state.editContent),
+            decoration: InputDecoration(
+              labelText: '内容',
+            ),
+            maxLines: 15,
+            onChanged: (text) => state.setEditContent(text),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: OutlineButton(
+              color: Colors.green,
+              child: Text('添加'),
+              onPressed: () async {
+                state.addCatalog(context);
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildCatalogEditShow(
     StateAdminCatalog state,
     BuildContext context,
@@ -104,7 +161,7 @@ class PageAdminCatalog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextField(
-            controller: TextEditingController(text: state.currentTopic.title),
+            controller: TextEditingController(text: state.editName),
             decoration: InputDecoration(
               labelText: '标题',
             ),
@@ -112,15 +169,14 @@ class PageAdminCatalog extends StatelessWidget {
           ),
           TextField(
             keyboardType: TextInputType.number,
-            controller: TextEditingController(
-                text: state.currentOptCatalog.order.toString()),
+            controller: TextEditingController(text: state.editOrder),
             decoration: InputDecoration(
               labelText: '序号',
             ),
             onChanged: (text) => state.setEditOrder(text),
           ),
           TextField(
-            controller: TextEditingController(text: state.currentTopic.content),
+            controller: TextEditingController(text: state.editContent),
             decoration: InputDecoration(
               labelText: '内容',
             ),
@@ -163,7 +219,10 @@ class PageAdminCatalog extends StatelessWidget {
     );
   }
 
-  Widget _buildCatalogMenu(BuildContext context, StateAdminCatalog state) {
+  Widget _buildCatalogMenu(
+    BuildContext context,
+    StateAdminCatalog state,
+  ) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +232,7 @@ class PageAdminCatalog extends StatelessWidget {
             return _buildCatalogSubMenu(e, state, context);
           }),
           GestureDetector(
-            onTap: () => _addRootCatalog(),
+            onTap: () => state.setAddRootChildCatalogState(),
             child: Container(
               color: Colors.green,
               margin: EdgeInsets.all(10),
@@ -193,15 +252,12 @@ class PageAdminCatalog extends StatelessWidget {
     );
   }
 
-  void _addRootCatalog() {}
-
   Widget _buildCatalogSubMenu(
     Catalog catalog,
     StateAdminCatalog state,
     BuildContext context,
   ) {
     bool isSelect = state.currentOptCatalog.id == catalog.id;
-    bool noChild = catalog.child == null || catalog.child.length == 0;
     var titleContent = Text(
       catalog.title,
       style: TextStyle(color: Color(0xff333333)),
@@ -219,7 +275,10 @@ class PageAdminCatalog extends StatelessWidget {
         child: isSelect
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [titleContent, _createCatalogMenu(state, noChild)],
+                children: [
+                  titleContent,
+                  _createCatalogMenu(state, catalog.noChild, context)
+                ],
               )
             : titleContent,
       ),
@@ -229,7 +288,7 @@ class PageAdminCatalog extends StatelessWidget {
     );
 
     return Container(
-      child: noChild
+      child: catalog.noChild
           ? titleWidget
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,16 +304,18 @@ class PageAdminCatalog extends StatelessWidget {
   PopupMenuButton<String> _createCatalogMenu(
     StateAdminCatalog state,
     bool noChild,
+    BuildContext context,
   ) {
     return PopupMenuButton<String>(
       tooltip: '编辑',
       onSelected: (String value) {
         if (value == '编辑') {
-          state.editSelectCatalog();
+          state.setEditCatalogState();
         } else if (value == '删除') {
-          state.removeSelectCatalog();
+          state.deleteSelectCatalog(context);
         } else if (value == '添加') {
           /// 添加
+          state.setAddChildCatalogState();
         }
       },
       child: Container(

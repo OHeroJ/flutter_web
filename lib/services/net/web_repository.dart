@@ -245,4 +245,13 @@ class WebRepository {
     Map data = response.data;
     return Catalog.fromMap(data);
   }
+
+  Future<String> deleteCatalog({String catalogId, String token}) async {
+    var response = await http.post(
+      '/booklet/catalog/delete/$catalogId',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+    String data = response.data;
+    return data;
+  }
 }

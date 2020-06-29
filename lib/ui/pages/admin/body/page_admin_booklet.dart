@@ -182,19 +182,22 @@ class PageAdminBooklet extends StatelessWidget {
     BuildContext context,
     StateAdminBooklet addState,
   ) {
-    return Column(children: [
-      Container(
-        child: Text(
-          '添加小册',
-          style: TextStyle(fontSize: 20),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          child: Text(
+            '添加小册',
+            style: TextStyle(fontSize: 20),
+          ),
+          margin: EdgeInsets.only(bottom: 20),
         ),
-        margin: EdgeInsets.only(bottom: 20),
-      ),
-      _buildTitleRow(addState),
-      _buildCoverUrlRow(addState),
-      _buildRemarksRow(addState),
-      _buildSubmitRow(addState, context),
-    ]);
+        _buildTitleRow(addState),
+        _buildCoverUrlRow(addState),
+        _buildRemarksRow(addState),
+        _buildSubmitRow(addState, context),
+      ],
+    );
   }
 
   Container _buildSubmitRow(StateAdminBooklet addState, BuildContext context) {
