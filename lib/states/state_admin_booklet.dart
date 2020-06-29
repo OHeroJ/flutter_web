@@ -7,9 +7,13 @@ import 'package:flutter_web/locator.dart';
 import 'package:oktoast/oktoast.dart';
 
 class StateAdminBooklet extends ViewStateModel {
-  String _name;
-  String _remarks;
-  String _cover;
+  String _editName;
+  String _editRemarks;
+  String _editCover;
+
+  String get editName => _editName;
+  String get editRemarks => _editRemarks;
+  String get editCover => _editCover;
 
   final GlobalUserState globalUser;
   StateAdminBooklet({@required this.globalUser});
@@ -24,6 +28,7 @@ class StateAdminBooklet extends ViewStateModel {
 
   bool _hasPreview;
   bool get hasPreview => _hasPreview;
+  Booklet _editBooklet;
 
   loadBooklets({
     int page = 1,
@@ -42,16 +47,30 @@ class StateAdminBooklet extends ViewStateModel {
     }
   }
 
+  setEditState(Booklet booklet) {
+    _editBooklet = booklet;
+    _editName = booklet.name;
+    _editRemarks = booklet.remarks;
+    _editCover = booklet.cover;
+  }
+
+  setNormalState() {
+    _editBooklet = null;
+    _editName = null;
+    _editRemarks = null;
+    _editCover = null;
+  }
+
   void setName(String name) {
-    _name = name;
+    _editName = name;
   }
 
   void setCover(String cover) {
-    _cover = cover;
+    _editCover = cover;
   }
 
   void setRemarks(String remarks) {
-    _remarks = remarks;
+    _editRemarks = remarks;
   }
 
   void addBooklet(Booklet booklet) {
@@ -63,18 +82,45 @@ class StateAdminBooklet extends ViewStateModel {
     // todo:
   }
 
+  updateBooklet(context) async {
+    if (_editBooklet == null) {
+      showToast('小册不存在', context: context);
+      return;
+    }
+
+    if (_editName == null || _editName.length == 0) {
+      showToast('请填写小册名称', context: context);
+      return;
+    }
+    try {
+      Booklet booklet = await repository.updateBooklet(
+        id: _editBooklet.id,
+        name: _editName,
+        remarks: _editRemarks,
+        token: globalUser.token.accessToken,
+        cover: _editCover,
+      );
+      setNormalState();
+      loadBooklets();
+      return booklet;
+    } catch (e, s) {
+      setError(e, s);
+      return null;
+    }
+  }
+
   createBooklet(context) async {
-    if (_name == null || _name.length == 0) {
+    if (_editName == null || _editName.length == 0) {
       showToast('请填写小册名称', context: context);
       return;
     }
 
     try {
       Booklet booklet = await repository.createBooklet(
-        name: _name,
-        remarks: _remarks,
+        name: _editName,
+        remarks: _editRemarks,
         token: globalUser.token.accessToken,
-        cover: _cover,
+        cover: _editCover,
       );
       addBooklet(booklet);
       return booklet;

@@ -182,6 +182,26 @@ class WebRepository {
     return Booklet.fromMap(data);
   }
 
+  Future<Booklet> updateBooklet(
+      {String name,
+      String remarks,
+      String cover,
+      String token,
+      String id}) async {
+    var response = await http.post(
+      '/booklet/update',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap({
+        'name': name,
+        'remarks': remarks,
+        'cover': cover,
+        'id': id,
+      }),
+    );
+    Map data = response.data;
+    return Booklet.fromMap(data);
+  }
+
   Future<List<Catalog>> getCatalogs({String catalogId}) async {
     var response = await http.get('/booklet/catalog/$catalogId');
     List data = ValueUtil.toList(response.data);

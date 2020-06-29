@@ -74,7 +74,10 @@ class PageAdminBooklet extends StatelessWidget {
                         ),
                         GFButton(
                           text: '编辑',
-                          onPressed: () {},
+                          onPressed: () {
+                            state.setEditState(state.booklets[index]);
+                            _showUpdateForm(context, state);
+                          },
                           shape: GFButtonShape.pills,
                           size: GFSize.SMALL,
                         )
@@ -160,10 +163,8 @@ class PageAdminBooklet extends StatelessWidget {
     );
   }
 
-  _showAddForm(
-    BuildContext context,
-    StateAdminBooklet bookletState,
-  ) {
+  _showAddForm(BuildContext context, StateAdminBooklet bookletState,
+      {bool edit = false}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -172,22 +173,27 @@ class PageAdminBooklet extends StatelessWidget {
               width: MediaQuery.of(context).size.width - 120,
               height: MediaQuery.of(context).size.height - 160,
               padding: EdgeInsets.all(20),
-              child: _buildAddForm(context, bookletState)),
+              child: _buildAddForm(context, bookletState, edit)),
         );
       },
     );
   }
 
+  _showUpdateForm(BuildContext context, StateAdminBooklet bookletState) {
+    _showAddForm(context, bookletState, edit: true);
+  }
+
   Widget _buildAddForm(
     BuildContext context,
     StateAdminBooklet addState,
+    bool isEdit,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           child: Text(
-            '添加小册',
+            isEdit ? '更新小册' : '添加小册',
             style: TextStyle(fontSize: 20),
           ),
           margin: EdgeInsets.only(bottom: 20),
@@ -195,20 +201,23 @@ class PageAdminBooklet extends StatelessWidget {
         _buildTitleRow(addState),
         _buildCoverUrlRow(addState),
         _buildRemarksRow(addState),
-        _buildSubmitRow(addState, context),
+        _buildSubmitRow(addState, context, isEdit),
       ],
     );
   }
 
-  Container _buildSubmitRow(StateAdminBooklet addState, BuildContext context) {
+  Container _buildSubmitRow(
+      StateAdminBooklet addState, BuildContext context, bool isEdit) {
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: OutlineButton(
-        child: Text('提交'),
+        child: Text(isEdit ? '更新' : '提交'),
         onPressed: () async {
-          var response = await addState.createBooklet(context);
+          var response = isEdit
+              ? await addState.updateBooklet(context)
+              : await addState.createBooklet(context);
           if (response != null) {
-            showToast('创建成功', context: context);
+            showToast(isEdit ? '更新成功' : '创建成功', context: context);
             Navigator.of(context).pop();
           }
         },
@@ -218,6 +227,7 @@ class PageAdminBooklet extends StatelessWidget {
 
   TextField _buildTitleRow(StateAdminBooklet addState) {
     return TextField(
+      controller: TextEditingController(text: addState.editName),
       onChanged: (text) {
         addState.setName(text);
       },
@@ -229,6 +239,7 @@ class PageAdminBooklet extends StatelessWidget {
 
   TextField _buildRemarksRow(StateAdminBooklet addState) {
     return TextField(
+      controller: TextEditingController(text: addState.editRemarks),
       onChanged: (text) {
         addState.setRemarks(text);
       },
@@ -240,6 +251,7 @@ class PageAdminBooklet extends StatelessWidget {
 
   TextField _buildCoverUrlRow(StateAdminBooklet addState) {
     return TextField(
+      controller: TextEditingController(text: addState.editCover),
       keyboardType: TextInputType.url,
       onChanged: (text) {
         addState.setCover(text);
