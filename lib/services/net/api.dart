@@ -6,7 +6,7 @@ final Http http = Http();
 class Http extends BaseHttp {
   @override
   void init() {
-    options.baseUrl = 'http://31h27e0026.qicp.vip/api';
+    options.baseUrl = 'https://sb.loveli.site/api';
     interceptors.add(WebApiInterceptor());
   }
 }

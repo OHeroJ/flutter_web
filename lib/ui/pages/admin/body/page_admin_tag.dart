@@ -18,7 +18,7 @@ class PageAdminTag extends StatelessWidget {
         model: StateAdminTag(globalUser: Provider.of(context)),
         onModelReady: (StateAdminTag model) => model.loadTags(),
         builder: (context, StateAdminTag state, child) {
-          if (state.viewState == ViewState.busy || state.tags.length == 0) {
+          if (state.viewState == ViewState.busy) {
             return ViewStateBusyWidget();
           }
           List tags = state.tags.map((e) => e.toMap()).toList();

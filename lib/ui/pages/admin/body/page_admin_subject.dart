@@ -18,11 +18,10 @@ class PageAdminSubject extends StatelessWidget {
         model: StateAdminSubject(globalUser: Provider.of(context)),
         onModelReady: (StateAdminSubject model) => model.loadSubjects(),
         builder: (context, StateAdminSubject state, child) {
-          if (state.viewState == ViewState.busy || state.subjects.length == 0) {
+          if (state.viewState == ViewState.busy) {
             return ViewStateBusyWidget();
           }
           List subjects = state.subjects.map((e) => e.toMap()).toList();
-//          return Text('$tags');
           return ResponsiveDatable(
             headers: [
               DatableHeader(

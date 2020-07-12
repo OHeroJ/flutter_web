@@ -8,4 +8,5 @@ GetIt locator = GetIt.instance;
 void setupLocator() {
   locator.registerLazySingleton(() => ServiceNavigation());
   locator.registerLazySingleton(() => WebRepository());
+  locator.registerLazySingleton(() => SpiderRepository());
 }

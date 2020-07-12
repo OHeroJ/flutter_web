@@ -27,6 +27,8 @@ class MenuItem {
       widget = PageAdminBooklet();
     } else if (title == '用户') {
       widget = PageAdminUser();
+    } else if (title == '爬虫') {
+      widget = PageAdminSpider();
     } else {
       widget = Center(
         child: Text(title),
@@ -58,7 +60,8 @@ class StateAdminMenu extends ChangeNotifier {
         ]
       },
       {"title": "小册", "child": []},
-      {"title": "用户", "child": []}
+      {"title": "用户", "child": []},
+      {"title": "爬虫", "child": []}
     ].map((e) => MenuItem.fromMap(e)).toList();
     menus[0].child[0].isSelect = true;
     _selectItem = menus[0].child[0];

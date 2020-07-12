@@ -20,7 +20,7 @@ class PageAdminBooklet extends StatelessWidget {
         model: StateAdminBooklet(globalUser: Provider.of(context)),
         onModelReady: (StateAdminBooklet model) => model.loadBooklets(),
         builder: (context, StateAdminBooklet state, child) {
-          if (state.viewState == ViewState.busy || state.booklets.length == 0) {
+          if (state.viewState == ViewState.busy) {
             return ViewStateBusyWidget();
           }
           List booklets = state.booklets.map((e) => e.toMap()).toList();
@@ -260,5 +260,19 @@ class PageAdminBooklet extends StatelessWidget {
         labelText: '输入封面url',
       ),
     );
+  }
+
+  Widget test() {
+    InkWell(
+      onTap: () {},
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.blue),
+            borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: Text('这是InkWell点击效果'),
+      ),
+    );
+    return Text('');
   }
 }
