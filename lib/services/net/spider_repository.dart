@@ -18,4 +18,10 @@ class SpiderRepository {
     Map data = response.data;
     return data;
   }
+
+  Future<Map> updateUploadState(String id) async {
+    var response = await http.get('http://127.0.0.1:5000/spider/uploaded/$id');
+    Map data = response.data;
+    return data;
+  }
 }

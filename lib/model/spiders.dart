@@ -11,6 +11,7 @@ class SpiderTopic implements Base {
   String tag; // 去重标识
   String source; // 来源
   int createTime;
+  bool isUpload;
 
   SpiderTopic.fromMap(Map json) {
     Map idMap = ValueUtil.toMap(json['_id']);
@@ -23,6 +24,7 @@ class SpiderTopic implements Base {
     tag = ValueUtil.toStr(json['tag']);
     source = ValueUtil.toStr(json['source']);
     createTime = ValueUtil.toInt(json['create_time']);
+    isUpload = ValueUtil.toInt(json['is_upload']) > 0;
   }
 
   Map<String, dynamic> toMap() {

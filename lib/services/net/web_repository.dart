@@ -122,6 +122,8 @@ class WebRepository {
     String remarks,
     String token,
     String coverUrl,
+    String url,
+    String source,
   }) async {
     var response = await http.post(
       '/topic/add',
@@ -135,6 +137,8 @@ class WebRepository {
         "remarks": remarks,
         "cover": coverUrl,
         "weight": 1,
+        "url": url,
+        "source": source,
       }),
     );
     Map data = response.data;
