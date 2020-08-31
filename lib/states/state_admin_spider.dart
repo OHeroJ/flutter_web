@@ -23,6 +23,14 @@ class StateAdminSpider extends ViewStateModel {
   String _url;
   String _source;
 
+  uploadTopic(SpiderTopic topic) {
+    title = topic.title;
+    content = topic.detail;
+    remarks = topic.desc;
+    url = topic.url;
+    source = topic.source;
+  }
+
   set title(String title) {
     _title = title;
   }

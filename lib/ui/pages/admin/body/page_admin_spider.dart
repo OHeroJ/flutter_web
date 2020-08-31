@@ -136,6 +136,7 @@ class PageAdminSpider extends StatelessWidget {
     BuildContext context,
     StateAdminSpider spiderState,
   ) {
+    spiderState.uploadTopic(topic);
     return showDialog(
       context: context,
       builder: (BuildContext context) {
